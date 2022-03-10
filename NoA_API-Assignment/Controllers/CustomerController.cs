@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using NoA_API_Assignment.Models;
@@ -10,8 +11,8 @@ namespace NoA_API_Assignment.Controllers
 	public class CustomerController : Controller
 	{
 		private List<Customer> group1, group2, group3;
-		
-		
+
+
 		public ActionResult Index()
 		{
 			// Create dummy list of dummy class Customer
@@ -66,6 +67,7 @@ namespace NoA_API_Assignment.Controllers
 				try
 				{
 					GroupData(customerList);
+					//SortLists();
 				}
 				catch (Exception e)
 				{
@@ -81,15 +83,17 @@ namespace NoA_API_Assignment.Controllers
 			{
 				Console.WriteLine($"Group1: {e.ToString()}");
 			}
+
 			foreach (var e in group2)
 			{
 				Console.WriteLine($"Group2: {e.ToString()}");
 			}
+
 			foreach (var e in group3)
 			{
 				Console.WriteLine($"Group3: {e.ToString()}");
 			}
-			
+
 			string test = customerList[0].PantoneValue;
 			return Content(outputJson);
 		}
@@ -120,7 +124,7 @@ namespace NoA_API_Assignment.Controllers
 				}
 			}
 		}
-		
+
 		// Input string will be something like: 17-4587, and we want the first part
 		private string StringTrimmer(string untrimmed)
 		{
@@ -134,6 +138,53 @@ namespace NoA_API_Assignment.Controllers
 
 			// if input doesn't contain any '-' character, do nothing
 			return untrimmed;
+		}
+
+		//	/customer/sorter
+		public ActionResult Sorter()
+		{
+			SortLists();
+			
+			return Content("sorter method was called");
+		}
+		
+		// Method to sort lists with objects according to a value in the object
+		private void SortLists()
+		{
+			// create anonymous types list
+			var unsorted = CreateList(new {name = "Hibiscus", priority = 3 });
+			unsorted.Add(new {name = "Rose", priority = 1});
+			unsorted.Add(new {name = "Lili", priority = 4});
+
+
+			var sorted = CreateList(new {name = "", priority = 0 });
+			sorted.Clear();
+			sorted = unsorted.OrderBy(x => x.priority).ToList();
+			//Console.WriteLine(String.Join(Environment.NewLine, sorted));
+			
+			// print results in console
+			Console.WriteLine("unsorted list");
+			foreach (var entry in unsorted)
+			{
+				Console.WriteLine(entry.name + " " + entry.priority);
+			}
+			
+			Console.WriteLine("-------------");
+			Console.WriteLine("sorted list");
+			
+			foreach (var entry in sorted)
+			{
+				Console.WriteLine(entry.name + " " + entry.priority);
+			}
+			
+			
+			
+		}
+
+		// helper method to create list of anonymous type
+		private static List<T> CreateList<T>(params T[] elements)
+		{
+			return new List<T>(elements);
 		}
 	}
 }
