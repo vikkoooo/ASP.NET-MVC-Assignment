@@ -19,5 +19,11 @@ namespace NoA_API_Assignment.Models
 		public string img { get; set; }
 		public string title { get; set; }
 		public string day { get; set; }
+		public string group { get; set; }
+		
+		// public Comic()
+		// {
+		// 	group = null;
+		// }
 	}
 }
