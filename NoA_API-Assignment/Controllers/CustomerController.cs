@@ -5,13 +5,13 @@ using System.Linq;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using NoA_API_Assignment.Models;
+using NoA_API_Assignment.ViewModel;
 
 namespace NoA_API_Assignment.Controllers
 {
 	public class CustomerController : Controller
 	{
 		private List<Customer> group1, group2, group3;
-
 
 		public ActionResult Index()
 		{
@@ -145,6 +145,15 @@ namespace NoA_API_Assignment.Controllers
 		{
 			SortLists();
 			
+			var customer = new Customer() { CustomerName = "test name" };
+
+			List<Customer> tempList = new List<Customer>() {new Customer() {CustomerName = "test name 1"}};
+			tempList.Add(new Customer() {CustomerName = "test name 2"});
+
+
+			var viewModel = new SorterCustomerViewModel() {Group1 = tempList};
+			
+			return View(viewModel);
 			return Content("sorter method was called");
 		}
 		

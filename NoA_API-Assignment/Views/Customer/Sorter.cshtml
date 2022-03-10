@@ -1,0 +1,21 @@
+﻿@model NoA_API_Assignment.ViewModel.SorterCustomerViewModel
+
+@{
+    ViewBag.Title = "Sorter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Group 1:</h2>
+<ul>
+    @foreach (var e in Model.Group1)
+    {
+        <li>@e.CustomerName</li>
+    }
+</ul>
+
+
+<h2>@Model.Group1[0].CustomerName</h2>
+<h2>@Model.Group1[1].CustomerName</h2>
+
+
